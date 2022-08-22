@@ -6,9 +6,10 @@ import {
   Input,
   Stack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Carousel from './Carousel';
 import Nav from './Nav';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 
 function App() {
   const [gotImg, setgotImg] = useState(false);
@@ -16,8 +17,11 @@ function App() {
   const [provider, setProvider] = useState('google');
   const [page, setPage] = useState('100');
   const [data, setData] = useState([]);
+  useEffect(() => {
+    duckduckgo();
+  }, [page, provider]);
 
-  async function duckduckgo(e) {
+  async function duckduckgo(e = 'Enter') {
     if (e.key === 'Enter') {
       fetch(`https://duckduckgo.com/?q=${query}&iar=images`)
         .then((r) => r.text())
@@ -60,8 +64,35 @@ function App() {
         </Container>
       ) : (
         <>
+          <Tabs variant="soft-rounded" colorScheme="green">
+            <TabList>
+              <Tab
+                onClick={(e) => {
+                  console.dir(e.target.innerText);
+                  setProvider(e.target.innerText)
+                }}
+              >
+                bing
+              </Tab>
+              <Tab
+                onClick={(e) => {
+                  console.dir(e.target.innerText);
+                  setProvider(e.target.innerText)
+                }}
+              >
+                google
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Carousel data={data} />
+              </TabPanel>
+              <TabPanel>
+                <Carousel data={data} />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
           {/* <Nav setQuery={setQuery} duckduckgo={duckduckgo} /> */}
-          <Carousel data={data} />
         </>
       )}
     </>
