@@ -40,15 +40,6 @@ function App() {
             setgData(data.results);
             setgotImg(true);
           });
-        fetch(
-          `https://duckduckgo.com/i.js?q=${query}&o=json&p=1&s=${page}&u=bing&` +
-            vqd
-        )
-          .then((r) => r.json())
-          .then((data) => {
-            console.log(data);
-            setbData(data.results);
-          });
       });
   }
 
@@ -75,7 +66,7 @@ function App() {
         </Container>
       ) : (
         <>
-          <Tabs variant="soft-rounded" colorScheme="green">
+          {/* <Tabs variant="soft-rounded" colorScheme="green">
             <TabList>
               <Tab>bing</Tab>
               <Tab>google</Tab>
@@ -84,11 +75,11 @@ function App() {
               <TabPanel>
                 <Carousel data={bdata} />
               </TabPanel>
-              <TabPanel>
-                <Carousel data={gdata} />
-              </TabPanel>
+              <TabPanel> */}
+          <Carousel data={gdata} />
+          {/* </TabPanel>
             </TabPanels>
-          </Tabs>
+          </Tabs> */}
           {/* <Nav setQuery={setQuery} duckduckgo={duckduckgo} /> */}
         </>
       )}
