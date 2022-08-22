@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
-export default function Nav() {
+export default function Nav({setQuery, duckduckgo}) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -32,6 +32,13 @@ export default function Nav() {
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
+            <Input
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+              onKeyDown={duckduckgo}
+              width={'100%'}
+            />
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>

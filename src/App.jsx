@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import Carousel from './Carousel';
+import Nav from './Nav';
 
 function App() {
   const [gotImg, setgotImg] = useState(false);
@@ -59,6 +60,7 @@ function App() {
         </Container>
       ) : (
         <>
+          <Nav setQuery={setQuery} duckduckgo={duckduckgo} />
           <Carousel data={data} />
         </>
       )}
