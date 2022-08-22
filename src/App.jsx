@@ -60,7 +60,7 @@ function App() {
         </Container>
       ) : (
         <>
-          <Nav setQuery={setQuery} duckduckgo={duckduckgo} />
+          {/* <Nav setQuery={setQuery} duckduckgo={duckduckgo} /> */}
           <Carousel data={data} />
         </>
       )}
