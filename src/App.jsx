@@ -1,5 +1,5 @@
 import {
-    Button,
+  Button,
   Center,
   Container,
   Flex,
@@ -17,31 +17,39 @@ function App() {
   const [query, setQuery] = useState('');
   const [provider, setProvider] = useState('google');
   const [page, setPage] = useState('100');
-  const [data, setData] = useState([]);
+  const [gdata, setgData] = useState([]);
+  const [bdata, setbData] = useState([]);
   useEffect(() => {
     duckduckgo();
   }, [page, provider]);
 
-  async function duckduckgo(e = 'Enter') {
-    if (e.key === 'Enter') {
-      fetch(`https://duckduckgo.com/?q=${query}&iar=images`)
-        .then((r) => r.text())
-        .then((data) => {
-          let vqd = data.split(';').find((e) => e.includes('vqd='));
-          vqd = vqd.split("'").join('');
-          console.log(vqd);
-          fetch(
-            `https://duckduckgo.com/i.js?q=${query}&o=json&p=1&s=${page}&u=${provider}&` +
-              vqd
-          )
-            .then((r) => r.json())
-            .then((data) => {
-              console.log(data);
-              setData(data.results);
-              setgotImg((prev) => !prev);
-            });
-        });
-    }
+  async function duckduckgo() {
+    fetch(`https://duckduckgo.com/?q=${query}&iar=images`)
+      .then((r) => r.text())
+      .then((data) => {
+        let vqd = data.split(';').find((e) => e.includes('vqd='));
+        vqd = vqd.split("'").join('');
+        console.log(vqd);
+        fetch(
+          `https://duckduckgo.com/i.js?q=${query}&o=json&p=1&s=${page}&u=google&` +
+            vqd
+        )
+          .then((r) => r.json())
+          .then((data) => {
+            console.log(data);
+            setgData(data.results);
+            setgotImg(true);
+          });
+        fetch(
+          `https://duckduckgo.com/i.js?q=${query}&o=json&p=1&s=${page}&u=bing&` +
+            vqd
+        )
+          .then((r) => r.json())
+          .then((data) => {
+            console.log(data);
+            setbData(data.results);
+          });
+      });
   }
 
   return (
@@ -58,39 +66,26 @@ function App() {
               onChange={(e) => {
                 setQuery(e.target.value);
               }}
-              onKeyDown={duckduckgo}
               width={'100%'}
             />
-            <Button onClick={duckduckgo} colorScheme={"facebook"}>search</Button>
+            <Button onClick={duckduckgo} colorScheme={'facebook'}>
+              search
+            </Button>
           </Stack>
         </Container>
       ) : (
         <>
           <Tabs variant="soft-rounded" colorScheme="green">
             <TabList>
-              <Tab
-                onClick={(e) => {
-                  console.dir(e.target.innerText);
-                  setProvider(e.target.innerText)
-                }}
-              >
-                bing
-              </Tab>
-              <Tab
-                onClick={(e) => {
-                  console.dir(e.target.innerText);
-                  setProvider(e.target.innerText)
-                }}
-              >
-                google
-              </Tab>
+              <Tab>bing</Tab>
+              <Tab>google</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Carousel data={data} />
+                <Carousel data={bdata} />
               </TabPanel>
               <TabPanel>
-                <Carousel data={data} />
+                <Carousel data={gdata} />
               </TabPanel>
             </TabPanels>
           </Tabs>
