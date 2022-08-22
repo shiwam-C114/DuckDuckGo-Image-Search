@@ -1,4 +1,5 @@
 import {
+    Button,
   Center,
   Container,
   Flex,
@@ -60,6 +61,7 @@ function App() {
               onKeyDown={duckduckgo}
               width={'100%'}
             />
+            <Button onClick={duckduckgo} colorScheme={"facebook"}>search</Button>
           </Stack>
         </Container>
       ) : (
